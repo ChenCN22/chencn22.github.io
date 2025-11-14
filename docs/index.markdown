@@ -16,8 +16,9 @@ Focus: Robotics, Control Systems, and AI Vision
 
 
 ## 📝 Latest Posts
+ [3D Resconstruction using Semi-Global Block Matching](/posts/2025-11-14-cv2-SGBM-reconstruction.md)
 
- [.db3 data slicing using SQL](/_posts/2025-02-12-ros2-db3-slicing-notes.md)
+ [lidar .db3 data slicing using SQL](/posts/2025-02-12-ros2-db3-slicing-notes.md)
 
 
 ### 🚧(Under construction) Projects 

@@ -2,6 +2,8 @@
 title: "ROS2 DB3 数据切片与 SQLite 删除记录流程笔记"
 layout: post
 description: "使用 SQLite 对 ROS2 rosbag2 (.db3) 文件进行时间切片、删除消息、压缩文件的工作流程框架"
+categories: ROS
+date: 2025-11-13
 ---
 
 # ROS2 DB3 时间切片与 SQLite 删除流程 **（待补全）**
