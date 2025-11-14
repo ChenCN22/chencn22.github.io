@@ -17,7 +17,7 @@ Focus: Robotics, Control Systems, and AI Vision
 
 ## 📝 Latest Posts
 
- [.db3 data slicing using SQL](/docs/_posts/2025-02-12-ros2-db3-slicing-notes.md)
+ [.db3 data slicing using SQL](/_posts/2025-02-12-ros2-db3-slicing-notes.md)
 
 
 ### 🚧(Under construction) Projects 
