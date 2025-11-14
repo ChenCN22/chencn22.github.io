@@ -51,3 +51,12 @@ plugins:
 #   - vendor/cache/
 #   - vendor/gems/
 #   - vendor/ruby/
+nav:
+  - name: "About"
+    link: "about.markdown"
+  - name: "Posts"
+    link: "/_posts"
+  - name: "Projects"
+    link: "/_projects"
+  - name: "Research"
+    link: "/_research"
