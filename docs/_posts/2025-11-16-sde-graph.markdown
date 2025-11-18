@@ -1,0 +1,345 @@
+---
+title: Graph 笔记与重点整理
+layout: post
+date: 2025-11-15
+categories: [Java & SDE]
+tags: [Graph, Tree, Traversal, BST]
+---
+
+# Graph
+
+## 从 Binary Tree 到 Graph
+
+树是图的一种特殊形式：  
+- 二叉树 (Binary Tree) 是每个节点最多 2 个子节点的树。  
+- 广义树 (General Tree / N-ary Tree) 是每个节点可以有 n 个子节点的树。  
+- 图 (Graph) 是树的泛化版本，去掉了“唯一根节点”和“无环”的限制。
+
+### General Tree (N-ary Tree)
+
+和二叉树一样，也用节点来表示，只是每个节点可以有多个子节点。
+
+```java
+class GraphNode {
+    int val;
+    List<GraphNode> neighbors;
+    GraphNode(int val) {
+        this.val = val;
+        this.neighbors = new ArrayList<GraphNode>();
+    }
+}
+```
+
+与树不同的是：
+
+-   树有根节点（root），可以从 root 访问所有节点；
+    
+-   图没有唯一根，所以需要用 **`List<GraphNode>`** 来表示整个图。
+    
+
+---
+
+## 图的定义
+
+图由 **顶点 (Vertices, V)** 和 **边 (Edges, E)** 构成：
+
+```mathematica
+Graph G = (V, E)
+```
+
+### 分类
+
+**1\. 按方向：**
+
+-   有向图 (Directed Graph)：边有方向
+    
+-   无向图 (Undirected Graph)：边是双向的
+    
+
+**2\. 按是否有环：**
+
+-   有环图：存在从某节点出发又能回到自己的路径
+    
+-   无环图：如树（特殊的无向无环图）  
+    对于“环”，一般只在**有向图**中讨论。
+    
+
+**3\. 按连通性：**
+
+-   连通图：所有顶点互相可达
+    
+-   非连通图：存在孤立的节点或子图
+    
+
+### 图的应用
+
+-   推荐系统（用户是节点，关系是边）
+    
+-   社交网络（人是节点，关系是边）
+    
+-   搜索路径（路径规划、地图）
+    
+
+---
+
+## 图的表示方法
+
+### 1\. 邻接矩阵 (Adjacency Matrix)
+
+```java
+int[][] adj;  // adj[i][j] == 1 表示 i 到 j 有一条边
+```
+
+**性质：**
+
+-   对无向图，矩阵对称：`adj[i][j] == adj[j][i]`
+    
+-   无向图的最大边数：`V(V - 1)/2 ~ O(V^2)`
+    
+-   稠密图（Dense Graph）适用；稀疏图会浪费空间。
+    
+
+---
+
+### 2\. 邻接表 (Adjacency List)
+
+更常见的图表示方式：
+
+Don't have to be a linked list, array and list works as well.
+
+```java
+List<List<Integer>> graph = new ArrayList<>(); 
+// 第一层：节点编号 第二层： 与第一层编号的节点相邻的所有节点
+graph.get(i); //endregion 表示节点 i 的所有邻居
+```
+
+**优点：**
+
+-   空间复杂度 O(V + E)
+    
+-   适用于稀疏图（Sparse Graph）
+    
+
+---
+
+## 图的遍历
+
+图的遍历方式与树类似，也分为：
+
+-   **DFS (Depth-First Search)** 深度优先搜索
+    
+    -   使用递归或栈实现
+        
+-   **BFS (Breadth-First Search)** 广度优先搜索
+    
+    -   使用队列实现
+        
+
+---
+
+# Tree
+
+树是图的一种特殊形式：**无环、有根、连通。**
+
+---
+
+## 树的遍历 (Traversal)
+
+根据访问顺序分为：
+
+-   Inorder (中序)
+    
+-   Preorder (前序)
+    
+-   Postorder (后序)
+    
+
+用途：
+
+-   构造树（constructTree）
+    
+-   分解树（deconstructTree）
+
+-   根据遍历顺序可以从list构造一棵树
+
+---
+
+## Binary Search Tree (BST)
+
+### 基本性质
+
+-   左子树所有节点 < 当前节点；
+    
+-   右子树所有节点 > 当前节点；
+    
+-   默认不允许重复值；
+    
+-   中序遍历 (inorder) 结果为有序数组；
+    
+-   `search()`, `insert()`, `remove()` 操作时间复杂度 O(height)。
+    
+
+范围：
+
+```scss
+O(log n) ≤ O(height) ≤ O(n)
+```
+
+---
+
+### Search()
+
+在每个节点比较目标值与当前节点值：
+
+-   如果目标小于当前节点 → 去左子树；
+    
+-   如果目标大于当前节点 → 去右子树；
+    
+-   否则找到目标。
+    
+
+**递归实现：**
+
+```java
+TreeNode search(TreeNode root, int target) {
+    if (root == null || root.key == target) return root;
+    if (target < root.key) return search(root.left, target);
+    return search(root.right, target);
+}
+```
+
+**迭代实现：**
+
+```java
+TreeNode search(TreeNode root, int target) {
+    TreeNode cur = root;
+    while (cur != null) {
+        if (cur.key == target) return cur;
+        cur = target < cur.key ? cur.left : cur.right;
+    }
+    return null;
+}
+```
+
+---
+
+## Self-Balancing Binary Search Tree
+
+为保持 O(log n) 时间复杂度，BST 需要自平衡机制：
+
+-   面试一般不会考实现，了解怎么用即可
+
+-   AVL Tree
+    
+-   Red-Black Tree  
+    Java 标准库中的 **TreeMap / TreeSet** 基于红黑树实现。
+    
+
+---
+
+## BST with Duplicated Nodes
+
+允许重复值的 BST 通常记录出现次数：
+
+```java
+class TreeNode {
+    int key;
+    int count;
+    TreeNode left;
+    TreeNode right;
+    TreeNode(int key) {
+        this.key = key;
+        this.count = 1;
+    }
+}
+```
+
+---
+
+## Insert()
+
+在 BST 中插入节点：
+
+-   必须插入到空位 (null)；
+    
+-   不修改已存在节点；
+    
+-   返回新的树根（可能未改变）。
+    
+
+**递归实现：**
+
+```java
+TreeNode insert(TreeNode root, int val) {
+    if (root == null) return new TreeNode(val);
+    if (val < root.key) {
+        root.left = insert(root.left, val);
+    } else if (val > root.key) {
+        root.right = insert(root.right, val);
+    } else {
+        root.count++;
+    }
+    return root;
+}
+```
+
+**迭代实现：**
+
+```java
+TreeNode insert(TreeNode root, int val) {
+    if (root == null) return new TreeNode(val);
+    TreeNode cur = root, prev = null;
+    while (cur != null) {
+        prev = cur;
+        if (val < cur.key) cur = cur.left;
+        else if (val > cur.key) cur = cur.right;
+        else {
+            cur.count++;
+            return root;
+        }
+    }
+    if (val < prev.key) prev.left = new TreeNode(val);
+    else prev.right = new TreeNode(val);
+    return root;
+}
+```
+
+---
+
+## Tail Recursion（尾递归）
+
+尾递归：递归调用是函数中的最后一步操作。
+
+示例：
+
+```java
+int sum(int n, int acc) {
+    if (n == 0) return acc;
+    return sum(n - 1, acc + n); // tail recursion
+}
+```
+
+而下面这种不是尾递归：
+
+```java
+return isBST(left) && isBST(right); // 最后一步操作是 &&
+```
+
+所有尾递归理论上都可转换为迭代形式，节省函数调用栈(callstack)空间，但 Java 编译器不会自动优化。
+
+但是没有固定转化公式
+
+---
+
+## 总结重点
+
+| 主题 | 难点与要点 |
+| --- | --- |
+| 树与图的关系 | 树是图的特殊形式（无环、有根、连通）。 |
+| 图的表示 | 邻接矩阵适合稠密图，邻接表适合稀疏图。 |
+| 图的遍历 | DFS 用栈或递归，BFS 用队列。 |
+| BST 搜索与插入 | 左小右大，插入到空位，返回新的根。 |
+| 自平衡树 | 保持 O(log n) 操作时间；红黑树与 AVL 是典型实现。 |
+| 尾递归 | 可转化为迭代，节省空间，但 Java 不自动优化。 |
+
+---

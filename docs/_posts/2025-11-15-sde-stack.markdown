@@ -1,0 +1,259 @@
+---
+title: Stack 笔记与重点整理
+layout: post
+date: 2025-11-15
+categories: [Java & SDE]
+tags: [Stack, Algorithm, Amortized Analysis]
+---
+# Stack
+
+## 捣腾与折腾
+
+**定义：**
+
+- **倒腾（reverse）**：把所有元素一次性搬过去（通常反转顺序）。
+- **折腾（rebalance）**：当结构失衡时，把部分元素重新分配，让之后的操作都变快。
+- **均摊（amortized）**：不是看单次最坏情况，而是把“偶尔的贵操作”分摊到后续的便宜操作中去。
+
+---
+
+## 重点难点标记
+
+| 主题 | 难点与理解重点 |
+|------|----------------|
+| 倒腾与折腾 | 二者区别：倒腾反序，折腾平衡；理解折腾后 amortized O(1) 来源。 |
+| Amortized 时间复杂度 | 理解为 “所有操作总耗时 ÷ 操作次数”；一次 O(n) 换来后续多次 O(1)。 |
+| 两栈实现队列 | 为什么倒腾一次后能连续多次 O(1) 出队。 |
+| 三栈实现双端队列 | 折腾过程如何保证总体均摊 O(1)。 |
+| min() 栈 | 双栈记录当前最小值，如何避免空间浪费。 |
+| 排序栈 | 排序方向：从栈顶看为从小到大。 |
+
+---
+
+## 1. 倒腾（Reverse）
+
+定义：两个 stack，所有元素依次由一个放到另一个。  
+结果：顺序反转。  
+时间复杂度：O(2n)。
+
+**代码：**
+
+```java
+while (!stack1.isEmpty()) {
+    stack2.push(stack1.pop());
+}
+```
+
+倒腾一次反序，倒腾两次恢复原序。
+
+---
+
+## 2\. How to sort numbers with two stacks
+
+**思路：**  
+类似插入排序，用第二个栈作为临时存放区。
+
+无重复值：
+
+```java
+Stack<Integer> input = new Stack<>();
+Stack<Integer> buffer = new Stack<>();
+
+while (!input.isEmpty()) {
+    int cur = input.pop();
+    while (!buffer.isEmpty() && buffer.peek() > cur) {
+        input.push(buffer.pop());
+    }
+    buffer.push(cur);
+}
+
+while (!buffer.isEmpty()) {
+    input.push(buffer.pop());
+}
+```
+
+有重复值：  
+可增加计数 `count` 或允许相同值压入 `buffer`。
+
+结果：`input` 从栈顶看为从小到大。
+
+---
+
+## 3\. How to implement a queue using two stacks
+
+**结构：**
+
+-   `stackIn`：负责入队；
+    
+-   `stackOut`：负责出队。
+    
+
+**思路：**
+
+-   出队时如果 `stackOut` 为空，就将 `stackIn` 中元素全部倒腾过去；
+    
+-   元素被倒腾一次后，之后的多次出队都是 O(1)。
+    
+
+**代码：**
+
+```java
+class MyQueue {
+  private Stack<Integer> stackIn = new Stack<>();
+  private Stack<Integer> stackOut = new Stack<>();
+
+  public void offer(int x) {
+    stackIn.push(x);
+  }
+
+  public Integer poll() {
+    if (stackOut.isEmpty()) {
+      while (!stackIn.isEmpty()) {
+        stackOut.push(stackIn.pop());
+      }
+    }
+    return stackOut.isEmpty() ? null : stackOut.pop();
+  }
+
+  public Integer peek() {
+    if (stackOut.isEmpty()) {
+      while (!stackIn.isEmpty()) {
+        stackOut.push(stackIn.pop());
+      }
+    }
+    return stackOut.isEmpty() ? null : stackOut.peek();
+  }
+}
+```
+
+**均摊分析：**
+
+-   每个元素只经历一次入、出和倒腾。
+    
+-   总操作 O(3n)，平均每次 O(1)。
+    
+
+---
+
+## 4\. How to implement the min() function in a stack (O(1) time)
+
+**目标：**  
+在普通 stack 基础上增加 `min()`，要求 O(1)。
+
+### 方法一：双栈同步
+
+```java
+class MinStack {
+  Stack<Integer> s1 = new Stack<>();
+  Stack<Integer> s2 = new Stack<>();
+
+  public void push(int x) {
+    s1.push(x);
+    if (s2.isEmpty() || x <= s2.peek()) {
+      s2.push(x);
+    }
+  }
+
+  public void pop() {
+    int val = s1.pop();
+    if (val == s2.peek()) {
+      s2.pop();
+    }
+  }
+
+  public int top() {
+    return s1.peek();
+  }
+
+  public int getMin() {
+    return s2.peek();
+  }
+}
+```
+
+**原理：**
+
+-   `s2` 记录当前最小值；
+    
+-   同时压栈、同时弹出；
+    
+-   查询最小值 O(1)。
+    
+
+### 方法二：优化空间
+
+只在新值小于当前最小值时压入 `s2`；  
+弹出时若相等再同步弹出。
+
+---
+
+## 5\. 用多个栈实现双端队列（Deque）
+
+**结构：**
+
+-   `stackLeft` 存前半段；
+    
+-   `stackRight` 存后半段；
+    
+-   `stackBuffer` 中转用。
+    
+
+**思路：**
+
+-   当一边空时，从另一边取一半放进 buffer，再倒回空的一边（折腾）。
+    
+-   折腾代价 O(n)，但之后多次操作均为 O(1)。
+    
+
+**伪代码：**
+
+```arduino
+if stackLeft.isEmpty():
+    half = stackRight.size() / 2
+    move half from stackRight → buffer
+    while buffer not empty:
+        stackLeft.push(buffer.pop())
+```
+
+**均摊时间分析：**
+
+一次折腾 O(3n)，后续 n/2 次操作 O(1)：  
+平均 (3n + n/2) / (n/2) = 7 → O(1)。
+
+---
+
+## 6\. 重点概念总结
+
+| 概念 | 含义 |
+| --- | --- |
+| 倒腾 | 把所有元素一次性搬过去，通常反转顺序。 |
+| 折腾 | 当结构失衡时，把部分元素重新分配，让之后的操作都变快。 |
+| 均摊（amortized） | 不是看单次最坏情况，而是把“偶尔的贵操作”分摊到后续的便宜操作中去。 |
+
+---
+.0
+## 7\. Stack 常见应用场景
+
+| 应用 | 说明 |
+| --- | --- |
+| 表达式求值 | 从中缀转后缀（RPN），遇到运算符时弹出操作数计算。 |
+| 括号匹配 | 用 stack 检查括号配对合法性。 |
+| 单调栈 | 求下一个更大/更小元素。 |
+| 两栈实现队列 | 通过倒腾实现 FIFO。 |
+| 双栈实现 min() | 辅助结构记录当前最小值。 |
+| 三栈实现双端队列 | 折腾以维持平衡，实现 amortized O(1)。 |
+
+---
+
+## 8\. 小结
+
+1.  栈的本质是 **LIFO（后进先出）**。
+    
+2.  倒腾一次反序，两次回原样。
+    
+3.  折腾通过重平衡换取多次 O(1) 操作。
+    
+4.  Amortized 时间复杂度衡量平均成本，是性能分析的重要方法。
+    
+5.  这些技巧不仅用于算法题，也广泛应用于系统实现（动态扩容、缓存、文件系统、内存回收等）。
+    

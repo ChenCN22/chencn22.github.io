@@ -51,12 +51,10 @@ plugins:
 #   - vendor/cache/
 #   - vendor/gems/
 #   - vendor/ruby/
-nav:
-  - name: "About"
-    link: "about.markdown"
-  - name: "Posts"
-    link: "/_posts"
-  - name: "Projects"
-    link: "/_projects"
-  - name: "Research"
-    link: "/_research"
+
+
+category_display_names:
+  ros: "ROS"
+  cv: "Computer Vision"
+  sde: "Java & SDE"
+  dl: "Deep Learning"

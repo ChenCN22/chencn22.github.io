@@ -2,7 +2,7 @@
 layout: post
 title: "Stereo Depth → Point Cloud Reconstruction Workflow"
 date: 2025-11-14
-categories: Computer Vision
+categories: [Computer Vision]
 ---
 
 # Stereo 3D Reconstruction Workflow  
@@ -82,8 +82,7 @@ disparity = stereo.compute(left_gray, right_gray) / 16.0
 
 ### Insert Disparity Visualization
 
-![Disparity](/posts/baby-disparity.png)
-
+![Disparity](/assets/img/baby-disparity.png)
 
 ---
 
