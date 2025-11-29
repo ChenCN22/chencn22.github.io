@@ -2,7 +2,7 @@
 title: "ROS2 学习笔记：Colcon 构建与 Overlay/Underlay 机制"
 layout: post
 description: "深入理解 ROS2 的构建工具 Colcon、工作区 Overlay/Underlay 的分层概念，以及如何解决 Conda 环境下的依赖问题。"
-categories: [ROS, Robotics, Linux]
+categories: [ROS, Linux]
 date: 2025-11-27
 ---
 

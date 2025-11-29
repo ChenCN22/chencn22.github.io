@@ -1,270 +1,84 @@
-# parameters
-
-![alt text](/assets/img/ros.png)
-
-查看参数
-```bash
-ros2 param list
-/teleop_turtle:
-  qos_overrides./parameter_events.publisher.depth
-  qos_overrides./parameter_events.publisher.durability
-  qos_overrides./parameter_events.publisher.history
-  qos_overrides./parameter_events.publisher.reliability
-  scale_angular
-  scale_linear
-  start_type_description_service
-  use_sim_time
-/turtlesim:
-  background_b
-  background_g
-  background_r
-  holonomic
-  qos_overrides./parameter_events.publisher.depth
-  qos_overrides./parameter_events.publisher.durability
-  qos_overrides./parameter_events.publisher.history
-  qos_overrides./parameter_events.publisher.reliability
-  start_type_description_service
-  use_sim_time
-```
-
-相同的几个是自动生成的
-
-**获取参数**
-
-    ros2 param get <node_name> <param_name>
-
-会直接返回参数值
-
-
-**改变参数**
-
-    ros2 param set <node_name> <parameter_name> <value>
-
-我记得也能调用service改？
-
-**查看/储存参数**
-    
-    查看
-    ros2 param dump <node_name>
-
-    存储（当前目录）
-
-    ros2 param dump /turtlesim > turtlesim.yaml
-
-**加载参数**
-
-    ros2 param load <node_name> <parameter_file>
-
-如果要修改大量参数也许储存再加载更方便
-
-qos_overrides为只读参数，只能在启动时赋值
-
-**节点启动时加载参数**
-
-    ros2 run <package_name> <executable_name> --ros-args --params-file <file_name>
-
-
-    
-
-
-# Service
-
-
-
-和topic（sub和pub）不同，service有client和server，并只在调用时产生request和response
-
-一个service只能由一个server，但是可以有多个client
-
-
-```bash
-ros2 service list
-/clear
-/kill
-/reset
-/spawn
-/teleop_turtle/describe_parameters
-/teleop_turtle/get_parameter_types
-/teleop_turtle/get_parameters
-/teleop_turtle/get_type_description
-/teleop_turtle/list_parameters
-/teleop_turtle/set_parameters
-/teleop_turtle/set_parameters_atomically
-/turtle1/set_pen
-/turtle1/teleport_absolute
-/turtle1/teleport_relative
-/turtlesim/describe_parameters
-/turtlesim/get_parameter_types
-/turtlesim/get_parameters
-/turtlesim/get_type_description
-/turtlesim/list_parameters
-/turtlesim/set_parameters
-/turtlesim/set_parameters_atomically
-```
-每个node有自动生成的6个服务parameters，额外的是特有的
-
-服务两大类：request/response
-```bash
-ros2 service list -t
-/clear [std_srvs/srv/Empty]
-/kill [turtlesim/srv/Kill]
-/reset [std_srvs/srv/Empty]
-/spawn [turtlesim/srv/Spawn]
-/teleop_turtle/describe_parameters [rcl_interfaces/srv/DescribeParameters]
-/teleop_turtle/get_parameter_types [rcl_interfaces/srv/GetParameterTypes]
-/teleop_turtle/get_parameters [rcl_interfaces/srv/GetParameters]
-/teleop_turtle/get_type_description [type_description_interfaces/srv/GetTypeDescription]
-/teleop_turtle/list_parameters [rcl_interfaces/srv/ListParameters]
-/teleop_turtle/set_parameters [rcl_interfaces/srv/SetParameters]
-/teleop_turtle/set_parameters_atomically [rcl_interfaces/srv/SetParametersAtomically]
-/turtle1/set_pen [turtlesim/srv/SetPen]
-/turtle1/teleport_absolute [turtlesim/srv/TeleportAbsolute]
-/turtle1/teleport_relative [turtlesim/srv/TeleportRelative]
-/turtlesim/describe_parameters [rcl_interfaces/srv/DescribeParameters]
-/turtlesim/get_parameter_types [rcl_interfaces/srv/GetParameterTypes]
-/turtlesim/get_parameters [rcl_interfaces/srv/GetParameters]
-/turtlesim/get_type_description [type_description_interfaces/srv/GetTypeDescription]
-/turtlesim/list_parameters [rcl_interfaces/srv/ListParameters]
-/turtlesim/set_parameters [rcl_interfaces/srv/SetParameters]
-/turtlesim/set_parameters_atomically [rcl_interfaces/srv/SetParametersAtomically]
-```
-
-找特定类型的service
-
-    ros2 service find <type_name>
-
-显示request和response的结构，`---`分割
-
-    ros2 interface show <type_name>
-
-
-**调用服务**
-
-    ros2 service call <service_name> <service_type> <arguments>
-
-没有argument可以不些如Empty
-
-可以tab补全
-
-
-service 是和topic不同的节点间通信方式。topic是单向的，持续发布的。
-
-service是on-demand调用
-
-如果需要持续监听/调用，应该使用topic而非service
-
-
-
-
-# Actions
-
-另一种通信方式
-
-![alt text](/assets/img/action.png)
-
-goal, feedback, result
-
-适用于长时间任务
-
-通过topic持续响应
-
-goal完成前可以取消
-
-**node**
-
-通过`ros2 node info <node_name>`最后的action部分的查看action server/client
-
-**list**
-
-    ros2 action list
-
-    -t 显示类型，类似service
-
-**info**
-
-```bash
-ros2 action info <action_name>
-
-ros2 action info /turtle1/rotate_absolute 
-Action: /turtle1/rotate_absolute
-Action clients: 1
-    /teleop_turtle
-Action servers: 1
-    /turtlesim
-```
-
-**显示接口**
-
-    ros2 interface show <acion_type>
-
-    request
-    ---
-    result
-    ---
-    feedback
-
-**send_goal**
-
-    ros2 action send_goal <action_name> <action_type> <values>
-
-    value需要yaml
-
-
-实时显示feedback：
-
-    ros2 action send_goal <action_name> <action_type> <values> --feedback
-
-
-
-# 用rqt_console查看日志
-
-    ros2 run rqt_console rqt_console
-
-Fatal
-
-Error
-
-Warn
-
-Info
-
-Debug
-
-
-**set log level**
-
-    ros2 run turtlesim turtlesim_node --ros-args --log-level WARN
-
-
-# **同时启动多个节点**
-
-用python启动
-
-    ros2 launch <launch.py> 
-
-
-# ros bag 
-
-**保存和重放各个topic发布的数据**
-供回放和复现
-
-    ros2 bag record <topic_name>
-
-    可以同时指定多个topic
-
-    -o 指定数据包名称 ros2 bag record -o subset /turtle1/cmd_vel /turtle1/pose
-
-    -a 记录所有topic
-
-回放文件格式`rosbag2_year_month_day-hour_minute_second`
-
-
-**查看bag信息**
-
-    ros2 bag info <bag_file>
-
-**要了解数据的发布频率**
-
-    ros2 topic hz <topic_name>
-
-
+---
+title: "ROS 2 parameter, service, action" 
+layout: post 
+description: "ROS 2 参数、服务（Services）与动作（Actions）的命令行操作与核心区别总结。" 
+categories: ROS
+date: 2025-11-23
+---
+
+本笔记总结了 ROS 2 中除 Topic 以外的三种主要通信机制：**参数（Parameters）**、**服务（Services）** 和 **动作（Actions）**，并附带日志和数据记录工具的简要用法。
+
+I. 参数 (Parameters)
+------------------
+
+参数是 Node **启动时可配置**的变量，用于修改 Node 的行为。
+
+| 功能  | 命令  | 备注  |
+| --- | --- | --- |
+| **查看列表** | `ros2 param list` | 显示所有 Node 及其参数。`qos_overrides` 等为自动生成。 |
+| **获取值** | `ros2 param get <node> <param>` | 直接返回参数的当前值。 |
+| **设置值** | `ros2 param set <node> <param> <value>` | 实时修改参数值（除非参数只读）。可通过参数服务调用。 |
+| **保存/导出** | `ros2 param dump <node> > <file.yaml>` | 将当前参数导出为 YAML 文件。 |
+| **加载参数** | `ros2 param load <node> <file.yaml>` | 运行中的 Node 可以加载参数文件。 |
+| **启动时加载** | `ros2 run <pkg> <exec> --ros-args --params-file <file.yaml>` | **重要：** 对于只读参数（如 `qos_overrides`），必须在启动时通过此方式赋值。 |
+
+II. 服务 (Services)
+-----------------
+
+Service 是一种**请求-响应**（Request-Response）模式的通信方式，适用于**一次性**、**非持续性**的任务调用。
+
+| 特性  | 说明  |
+| --- | --- |
+| **模式** | **Client (客户端)** 发送请求，**Server (服务器)** 接收请求并返回响应。 |
+| **数量** | 一个 Service 只能有一个 Server，但可以有多个 Client。 |
+| **自动服务** | 每个 Node 都会自动生成 **6 个参数服务**（`get_parameters`, `set_parameters` 等）。 |
+
+| 功能  | 命令  | 备注  |
+| --- | --- | --- |
+| **查看服务列表** | `ros2 service list` | 查看所有可用的 Service。 |
+| **查看服务类型** | `ros2 service list -t` | 同时显示 Service 的接口类型（如 `std_srvs/srv/Empty`）。 |
+| **查找服务** | `ros2 service find <type_name>` | 查找特定接口类型的所有 Service。 |
+| **查看接口结构** | `ros2 interface show <type_name>` | 显示 Service 的 Request 和 Response 结构，由 `---` 分割。 |
+| **调用服务** | `ros2 service call <service> <type> <args>` | 发送请求并等待响应。无参数时 `<args>` 可省略（如 `Empty` 类型）。 |
+
+III. 动作 (Actions)
+-----------------
+
+Action 是一种**基于 Service 的扩展**通信方式，专为**长时间运行**、\*\*可抢占（可取消）\*\*的任务设计。
+
+| 元素  | 说明  |
+| --- | --- |
+| **Goal (目标)** | 相当于 Service 的 Request，定义任务目标。 |
+| **Result (结果)** | 相当于 Service 的 Response，任务最终完成或失败的结果。 |
+| **Feedback (反馈)** | 任务进行中，Server 持续向 Client 发送的实时状态信息（Topic 模式）。 |
+
+| 功能  | 命令  | 备注  |
+| --- | --- | --- |
+| **查看列表** | `ros2 action list [-t]` | 查看所有 Action Server。 |
+| **查看信息** | `ros2 action info <action_name>` | 显示该 Action 的 Client 和 Server 数量及对应 Node。 |
+| **查看接口** | `ros2 interface show <action_type>` | 显示 Action 的 Goal, Result, Feedback 结构，由 `---` 分割。 |
+| **发送目标** | `ros2 action send_goal <action> <type> <values>` | 发送目标请求。`<values>` 通常为 YAML 格式。 |
+| **实时反馈** | `ros2 action send_goal ... --feedback` | 在发送目标的同时，实时显示 Server 返回的 Feedback 信息。 |
+
+IV. 日志与数据记录
+-----------
+
+### 1\. 日志查看 (`rqt_console`)
+
+| 工具  | 命令  | 备注  |
+| --- | --- | --- |
+| **日志查看器** | `ros2 run rqt_console rqt_console` | GUI 工具，用于实时筛选和查看所有 Node 的日志。 |
+| **日志级别** | `FATAL > ERROR > WARN > INFO > DEBUG` | 级别从高到低。默认通常为 `INFO`。 |
+| **启动时设置** | `ros2 run <pkg> <exec> --ros-args --log-level WARN` | 设置该 Node 仅显示 `WARN` 及更高级别的日志。 |
+
+### 2\. 数据包记录 (`rosbag`)
+
+`rosbag` 用于保存和重放 Topic 发布的数据流，便于复现和调试。
+
+| 功能  | 命令  | 备注  |
+| --- | --- | --- |
+| **记录指定 Topic** | `ros2 bag record <topic1> <topic2>` | 记录一个或多个 Topic 的数据。 |
+| **记录所有 Topic** | `ros2 bag record -a` | 记录所有正在发布的 Topic 数据。 |
+| **指定文件名** | `ros2 bag record -o <name> ...` | `-o` 参数指定数据包文件夹名称。 |
+| **查看信息** | `ros2 bag info <bag_file>` | 查看数据包中包含的 Topic、消息数量和时间范围。 |
 
