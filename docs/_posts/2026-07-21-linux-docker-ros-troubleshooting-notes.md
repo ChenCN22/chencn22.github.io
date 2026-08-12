@@ -1,8 +1,8 @@
 ---
 title: "Linux / Docker / ROS 日常踩坑速查合集"
 layout: post
-description: "从语音笔记收件箱里整理出来的一批零散但高频的踩坑记录：磁盘占满、X11、Docker 清理、RViz goal topic、鱼眼标定等。"
-categories: [Linux, ROS]
+description: "从语音笔记收件箱里整理出来的一批零散但高频的踩坑记录：磁盘占满、X11、Docker 清理、RViz goal topic、鱼眼标定、Isaac Sim GUI 黑屏等。"
+categories: [Linux, ROS, IsaacSim]
 date: 2026-07-21
 ---
 
@@ -17,6 +17,17 @@ date: 2026-07-21
 **强杀卡死的 GUI 窗口** —— 终端敲 `xkill`，鼠标变成 X 后点谁杀谁。对卡死的 RViz / Gazebo / SSH 转发窗口特别好用。
 
 **SSH 远程打开浏览器** —— `ssh -X user@host xdg-open https://example.com`。
+
+**切换到另一个用户** —— `su <username>`（命令行下切换用户身份，跑权限归属不同的东西时用得上）。
+
+**原版中文输入法不好用，换 Fcitx5**
+
+```bash
+sudo apt install fcitx5 fcitx5-chinese-addons fcitx5-rime
+im-config    # 选 fcitx5，注销重登生效
+```
+
+登录后命令行 `fcitx5 &` 起进程，右上角图标进 config 把 Rime 加进输入法列表，再在 Rime 里切简/繁。
 
 **nano 里复制长行不完整** —— 长行显示被截断导致复制丢内容。`nano -l` 启动，或在 `.nanorc` 里加 `set softwrap`。
 
@@ -56,6 +67,16 @@ rosdep install --from-paths src --ignore-src -r -y
 ```
 
 **OpenCV 鱼眼标定 (`cv2.fisheye.calibrate`)** —— 不要用带二维码的标定板，QR 图案会干扰角点识别，标定要么失败要么精度很差。用干净的纯棋盘格。
+
+## Isaac Sim
+
+**GUI 起不来 / 黑屏，按这三步排查**（在 Docker 里跑 Isaac 的常见故障，按顺序试）：
+
+1. **GPU 掉了？** `docker exec <isaac-gui-container> nvidia-smi` —— 报 NVML 错误就是容器把 GPU 丢了，`docker restart <isaac-gui-container>` 一般能救回来。
+2. **X 授权掉了？** 宿主机 `xhost` 里没有 `LOCAL:`（注销 / 重启后会被重置），重跑 `xhost +local:`。
+3. **前两步都正常** —— 直接看容器内日志：`docker exec <isaac-gui-container> tail -30 /tmp/gui.log`。
+
+**把 UE5 场景搬进 Omniverse / Isaac** —— 从 UE5 导出后，用 **USD Composer + Scene Optimizer** 处理成可用的 USD；具体流程参考 AirLab 的相关 post，别自己硬啃。
 
 ## 概念速记
 

@@ -54,12 +54,27 @@ streamed to rviz, which makes its decisions auditable in real time.
   roadmap transitions — fixed with an in-place scan rotation
   ([write-up here]({% post_url 2026-07-21-exploration-cold-start-debugging %})).
 
-## Status & next steps
+## Benchmarking
 
-Both decision modes run live in the full exploration loop (demoed 07/2026). Next:
-quantitative benchmarking of VLM vs. geometric vs. fixed-posture baselines on semantic
-coverage and exploration efficiency, and richer VLM context (object map crops,
-multi-frame queries).
+Both decision modes now run inside a reproducible evaluation harness that scores a full
+autonomous run against a ground-truth scan of the scene. It compares a ladder of planner
+variants under identical conditions:
+
+- **Geometric (no VLM):** posture chosen by unseen-voxel information gain — the zero-cost baseline.
+- **VLM-per-viewpoint:** the model is queried on arrival at each object to pick the inspection posture.
+- **Session + predicted posture:** the posture is decided once per object at a "consultation"
+  step and executed on arrival with zero wait, cutting redundant VLM calls.
+- **Receding-horizon:** postures are pre-decided as the tour approaches each object, so the
+  robot inspects targets *without stopping* — the closest to how a real deployment would run.
+
+Runs are scored on **ground-truth surface coverage**, **time-to-90%-coverage**, semantic
+completeness, and **VLM query cost** (calls + tokens), under a real-time profile (simulation
+real-time factor pinned to 1.0) so the latency-sensitive receding-horizon comparison is honest.
+
+## Next steps
+
+Richer VLM context (object-map crops, multi-frame queries), and porting the validated
+planner ladder onto the Isaac Sim 5.0 + ROS2 branch.
 
 *Stack: ROS Noetic + Isaac Sim (this branch), Isaac Sim 5.0 + ROS2 (parallel branch),
 C++ (planner), Python (VLM bridge, simulator tooling), Docker.*
