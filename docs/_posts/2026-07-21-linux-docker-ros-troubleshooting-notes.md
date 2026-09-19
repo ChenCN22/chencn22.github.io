@@ -1,7 +1,7 @@
 ---
 title: "Linux / Docker / ROS 日常踩坑速查合集"
 layout: post
-description: "从语音笔记收件箱里整理出来的一批零散但高频的踩坑记录：磁盘占满、X11、Docker 清理、RViz goal topic、鱼眼标定、Isaac Sim GUI 黑屏等。"
+description: "从语音笔记收件箱里整理出来的一批零散但高频的踩坑记录：磁盘占满、X11、Docker 清理、RViz goal topic、鱼眼标定、ROS2 QoS 丢包、Isaac Sim GUI 黑屏、git 免密、ffmpeg 抽帧、术语速记等。"
 categories: [Linux, ROS, IsaacSim]
 date: 2026-07-21
 ---
@@ -15,6 +15,8 @@ date: 2026-07-21
 **图形界面出问题** —— 先 `nvidia-smi` 确认显卡还在，再 `sudo systemctl restart gdm`。
 
 **强杀卡死的 GUI 窗口** —— 终端敲 `xkill`，鼠标变成 X 后点谁杀谁。对卡死的 RViz / Gazebo / SSH 转发窗口特别好用。
+
+**按命令行匹配杀进程** —— `pkill -f "match string"` 按**完整命令行**匹配（不像默认只匹配进程名），杀带一长串参数的进程 / 脚本时好用。坑：匹配串会把 `pkill`/`grep` 命令自己也匹配进去，用方括号避开（如 `patter[n]`）。
 
 **SSH 远程打开浏览器** —— `ssh -X user@host xdg-open https://example.com`。
 
@@ -68,6 +70,8 @@ rosdep install --from-paths src --ignore-src -r -y
 
 **OpenCV 鱼眼标定 (`cv2.fisheye.calibrate`)** —— 不要用带二维码的标定板，QR 图案会干扰角点识别，标定要么失败要么精度很差。用干净的纯棋盘格。
 
+**ROS2 大数据 topic 别用 `best_effort`，改 `reliable`** —— DDS 底层把大消息按 UDP 分块发；`best_effort` 下**丢任意一块，整条消息就作废**（收端拼不出来直接丢弃），高清视频、大点云这种一帧几 MB 的 topic 尤其明显。改成 `reliable` 后丢块会自动重传。数据量再大，可能还得把 DDS 的**共享内存（shared memory）**调大。调 Insta360 X4 driver 时踩的坑。
+
 ## Isaac Sim
 
 **GUI 起不来 / 黑屏，按这三步排查**（在 Docker 里跑 Isaac 的常见故障，按顺序试）：
@@ -78,7 +82,43 @@ rosdep install --from-paths src --ignore-src -r -y
 
 **把 UE5 场景搬进 Omniverse / Isaac** —— 从 UE5 导出后，用 **USD Composer + Scene Optimizer** 处理成可用的 USD；具体流程参考 AirLab 的相关 post，别自己硬啃。
 
+## Git & 媒体工具
+
+**git 免密 clone（配 SSH key）** —— 不想每次输账号密码，配一把 key：
+
+```bash
+ssh-keygen -t ed25519 -C "your_email@example.com"
+cat ~/.ssh/id_ed25519.pub          # 复制输出
+# 贴到 GitHub → Settings → SSH and GPG keys → New SSH key
+ssh -T git@github.com              # 测试连通
+```
+
+之后用 `git@github.com:user/repo.git` 形式 clone 就不再要密码。
+
+**ffmpeg 抽帧（比 OpenCV 快）** —— 降帧率 + 导出 JPG 序列，处理视频数据集常用：
+
+```bash
+#!/bin/bash
+video_name=$1
+fps=$2
+base_name="${video_name%.*}"
+reduced_video="${base_name}_${fps}fps.mp4"
+output_dir="${base_name}_${fps}fps"
+
+# 降帧率
+ffmpeg -i "$video_name" -filter:v "fps=$fps" -c:a copy "$reduced_video"
+# 抽帧为 JPG（-q:v 2 高质量，从 0 开始编号）
+mkdir -p "$output_dir"
+ffmpeg -i "$reduced_video" -q:v 2 -start_number 0 "${output_dir}/%05d.jpg"
+```
+
 ## 概念速记
 
 - **Pixel vs Voxel**：2D 图像最小单元 vs 3D 空间最小单元（点云体素化的基本单位）。
 - **Wall time vs CPU time**：真实流逝时间 vs CPU 实际计算时间（不含 IO 等待/阻塞）。
+- **Oracle**：理想化的黑盒，能直接给出正确答案、通常不可实现——常拿来当性能上界 / baseline。
+- **Dwell**：停留（在某个视点 / 状态停留的时长）。
+- **Race condition（竞态）**：并发下多个操作先后顺序不确定，结果时对时错、不可复现；同样代码同样场景，绝大多数时候正常、偶尔失败。
+- **Stub（桩）**：接口签名正确、内部是假的 / 极简替代实现，真实组件缺位时先把流程跑通。
+- **Churn**：状态 / 输出在几个值之间来回横跳，每次跳动都触发下游代价、净收益却为零。软件里的 **code churn** 指刚写的代码（常在两三周内）被重写 / 删除 / 替换的比率；另有 backlog / customer / team churn。
+- **Stale（过期）**：数据还在，但已经不反映当前真实状态。

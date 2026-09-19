@@ -64,3 +64,4 @@ category_display_names:
   cv: "Computer Vision"
   sde: "Java & SDE"
   dl: "Deep Learning"
+  rl: "Robot Learning"

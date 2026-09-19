@@ -28,12 +28,14 @@ LiDAR–camera fusion · VLM-in-the-loop inspection · embodied intelligence
 
 ## Current Research
 
-- [**6-DoF Semantic Exploration with VLM-Guided Active Inspection**](/research/semantic-exploration) —
-  a Spot robot autonomously explores an industrial scene, builds a semantic object map from
-  instance-mask detections, and uses either geometric information gain or a vision-language
-  model (Gemini) to choose full-body inspection postures at object viewpoints — now
-  benchmarked against geometric and receding-horizon planners on ground-truth coverage,
-  time-to-90%-coverage, and VLM cost. (NVIDIA Isaac Sim, ROS, C++/Python)
+- [**5-DoF Semantic Exploration with VLM-Guided Active Inspection**](/research/semantic-exploration) —
+  a Spot robot explores an unknown industrial scene, maps the machines it recognizes, and
+  tilts its body (pitch and roll on top of planar motion — 5-DoF viewpoints chosen by
+  expected coverage gain, with VLM-assisted viewpoint pruning) to observe the surfaces a
+  level gaze cannot see. **+8–10 pp** target-surface coverage and **17–32% less exploration
+  time** than the planar baseline in simulation; demonstrated on a real Spot in a machine shop.
+  *Co-first author · [arXiv:2609.19460](https://arxiv.org/abs/2609.19460) · submitted to
+  ICRA 2027.* (NVIDIA Isaac Sim, ROS, C++/Python)
 - [**Real-Time LiDAR–Panoramic Camera Semantic Registration**](/research/lidar-camera-registration) —
   fusing Ouster LiDAR with Insta360 panoramic imagery on a real Boston Dynamics Spot:
   10 FPS dense semantically-colored point clouds with <100 ms latency under gait vibration.

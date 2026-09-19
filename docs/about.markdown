@@ -9,10 +9,11 @@ I'm **Shiyu Chen (陈时宇)**, and I go by **Kris**.
 I'm an M.S. student in Mechanical Engineering (Research) at **Carnegie Mellon University**
 (Aug 2025 – May 2027 expected), working in the
 [Computational Engineering and Robotics Lab (CERLAB)](https://cerlab11.andrew.cmu.edu/)
-with Prof. Kenji Shimada. My research is on **autonomous semantic exploration and 6-DoF
-active inspection** for industrial environments — currently building a system where a
-Spot robot explores a factory scene, maps the objects it recognizes, and uses a
-vision-language model in the planning loop to decide how to look at them.
+with Prof. Kenji Shimada. My research is on **5-DoF semantic exploration and active
+inspection** for legged robots in industrial environments — a Spot robot explores an unknown
+facility, maps the machines it recognizes, and tilts its own body (pitch and roll on top of
+planar motion) to observe the surfaces a level gaze cannot see. That work is now a paper,
+[arXiv:2609.19460](https://arxiv.org/abs/2609.19460) (co-first author, submitted to ICRA 2027).
 
 Before CMU I completed a joint B.S./B.Eng. in Mechanical Engineering at the **University
 of Cincinnati** and **Chongqing University** (Robotics minor), and spent a year and a
@@ -22,6 +23,10 @@ inspection.
 
 ### Publications
 
+- X. Zhan\*, **S. Chen\***, K. Shimada, "Pose-aware Legged Robot Semantic Exploration with
+  Omnidirectional Perception in Confined Unknown Environments,"
+  [arXiv:2609.19460](https://arxiv.org/abs/2609.19460), Sep 2026. *Submitted to ICRA 2027
+  (under review). \*Equal contribution.*
 - Y. Wang, C. Liu, K. Jiang, B. Wu, **S. Chen**, J. Dong, A. Ashfaq, "Innovative Flexible
   Robotic Arm for Enhanced Precision in Transaortic Surgical Myectomy,"
   *ASME Journal of Medical Diagnostics*, 9(2): 021001, 2026.
