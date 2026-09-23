@@ -112,6 +112,14 @@ mkdir -p "$output_dir"
 ffmpeg -i "$reduced_video" -q:v 2 -start_number 0 "${output_dir}/%05d.jpg"
 ```
 
+**SVG 不用画图软件，直接写文本** —— 新建 txt 把代码敲进去，后缀改成 `.svg` 就是矢量图，浏览器/网页/Markdown 都能直接用，改尺寸颜色就是改几个数字：
+
+```xml
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
+  <rect x="10" y="10" width="180" height="180" fill="none" stroke="red" stroke-width="16"/>
+</svg>
+```
+
 ## 概念速记
 
 - **Pixel vs Voxel**：2D 图像最小单元 vs 3D 空间最小单元（点云体素化的基本单位）。
