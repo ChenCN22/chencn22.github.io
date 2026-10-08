@@ -20,8 +20,8 @@
 
 title: Kristall's homepage
 email: shiyuche@andrew.cmu.edu
-description: >- # this means to ignore newlines until "baseurl:"
-  My Personal notes and codes
+description: >-
+  Shiyu (Kris) Chen — robotics M.S. researcher at CMU CERLAB: legged-robot autonomy, active perception, LiDAR–camera fusion.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://chencn22.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: KrisChen7

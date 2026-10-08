@@ -4,7 +4,6 @@ title: "3D Reconstruction of Shoe Interiors for Footwear Fit"
 permalink: /research/in-shoe-reconstruction
 ---
 
-# 3D Reconstruction of Shoe Interiors for Footwear Fit
 
 **CERLAB, CMU · Sep 2026 – present · research assistant with Prof. Kenji Shimada**
 

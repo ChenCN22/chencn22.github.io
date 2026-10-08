@@ -1,10 +1,10 @@
 ---
 layout: page
-title: "All Posts"
+title: "Notes"
 permalink: /posts/
 ---
 
-# All Posts by Category:
+Working notes — ROS, Linux, Docker, course notes, debugging stories. Mostly in Chinese.
 
 {% for cat in site.categories %}
   {% assign key = cat[0] %}
