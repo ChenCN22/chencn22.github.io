@@ -18,7 +18,7 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
-title: Kristall's homepage
+title: Shiyu Chen
 email: shiyuche@andrew.cmu.edu
 description: >-
   Shiyu (Kris) Chen — robotics M.S. researcher at CMU CERLAB: legged-robot autonomy, active perception, LiDAR–camera fusion.
