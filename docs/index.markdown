@@ -42,8 +42,6 @@ LiDAR–camera fusion · VLM-in-the-loop inspection · embodied intelligence
 
 ## Selected Past Projects
 
-- [PID Control of a DC Motor in Noisy Environments](/projects/dc-motor) — Wavelet MRPID vs.
-  CNN-attention PID (ICCSM 2024)
 - Cable-driven soft robotic arm for minimally invasive surgery (Univ. of Cincinnati) —
   published in *ASME J. Medical Diagnostics*, 2026
 - Deep-learning defect detection for industrial inspection (CISDI / Chongqing University)

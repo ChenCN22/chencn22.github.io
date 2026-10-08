@@ -2,6 +2,7 @@
 layout: page
 title: "DC Motor PID Control in Noisy Environments"
 permalink: /projects/dc-motor
+published: false
 ---
 
 # DC Motor Control in Noisy Environments

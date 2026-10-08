@@ -30,8 +30,6 @@ inspection.
 - Y. Wang, C. Liu, K. Jiang, B. Wu, **S. Chen**, J. Dong, A. Ashfaq, "Innovative Flexible
   Robotic Arm for Enhanced Precision in Transaortic Surgical Myectomy,"
   *ASME Journal of Medical Diagnostics*, 9(2): 021001, 2026.
-- **S. Chen**, "DC Motor Control in Noisy Environments: A Comparative Study of Wavelet MRPID
-  vs. CNN-Attention Integrated PID," *ICCSM*, Shanghai, 2024.
 - L. Liu, **S. Chen**, Z. Tang, "Intelligent Diagnosis of Bearing Faults Based on SDP Image
   Fusion," *ICICML*, Chengdu, 2023.
 - Co-inventor on four granted Chinese invention patents (deep-learning machine vision for
