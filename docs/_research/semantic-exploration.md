@@ -42,47 +42,6 @@ extra posture costs mission time. POSE is about getting that trade-off right.
    drop redundant visits; a geometric fallback means the stack never blocks.
 5. Semantic and frontier viewpoints merged in one global planner.
 
-<figure style="margin:1rem 0;"><img src="/assets/img/pose/frontpage.jpg" alt="Real-world run in a machine shop: (a) Spot pitched −30° to see the top of a band saw, (b) the same viewpoint in the point cloud, (c) fisheye frame, (d) semantic map with object boxes, viewpoints and path, (e) panorama with the five target machines detected." style="max-width:100%;border-radius:6px;"><figcaption style="color:#666;font-size:.9em;margin-top:.4rem;">Real-world run in a machine shop: (a) Spot pitched −30° to see the top of a band saw, (b) the same viewpoint in the point cloud, (c) fisheye frame, (d) semantic map with object boxes, viewpoints and path, (e) panorama with the five target machines detected.</figcaption></figure>
-## Video
-
-<div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;max-width:100%;margin:0 0 1rem;">
-  <iframe src="https://www.youtube.com/embed/1NR4InKZl2I" title="Real-world run: Spot exploring an unknown machine shop" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
-
-*Real-world run on Spot in a machine shop (playback 0.6×–2.5×). More figures on the
-[project page](https://shawn207.github.io/projects/pose/).*
-
-## The problem
-
-Real inspection targets — a lathe, a valve, a conveyor — have *semantics*, and their most
-informative view is rarely the one a flat-bodied robot gets for free: a ground robot's
-limited vertical field of view leaves the **upper surfaces** of tall equipment unseen.
-A quadruped can tilt its body (pitch and roll → 5-DoF viewpoints) to fix that, but every
-extra posture costs mission time. POSE is about getting that trade-off right.
-
-## What the system does
-
-Spot, carrying an omnidirectional camera–LiDAR suite, explores an unknown industrial scene
-end-to-end:
-
-1. **Frontier-based exploration** with an incremental roadmap planner (information-gain
-   scoring, TSP-ordered global tours) drives coverage of the unknown map.
-2. **Semantic mapping** — 2D instance-segmentation detections are back-projected using the
-   **per-instance visible-pixel masks** (not just bounding boxes), DBSCAN-filtered, and
-   fused into 3D semantic object boxes in the occupancy map.
-3. **5-DoF viewpoint sampling** — candidate viewpoints around each mapped object add the
-   robot's **body pitch and roll** to its planar pose; postures are selected from the
-   partial object map by **expected coverage gain**.
-4. **Aim-aligned execution** — approach and body reorientation are aligned with the
-   viewing aim, so the robot spends fewer postures (and less time) per object.
-5. **VLM-assisted viewpoint pruning** — an object-centric strategy in which a
-   vision-language model, given the persistent observation history and a bird's-eye-view
-   (BEV) map, prunes redundant inspection visits. A geometric answer remains the automatic
-   fallback on timeout or API error, so the autonomy stack never blocks on a network call.
-6. The resulting semantic viewpoints are **merged with geometric exploration viewpoints**
-   in one global exploration planner.
-
-
 <figure style="margin:1rem 0;"><img src="/assets/img/pose/methodology.jpg" alt="System overview: fusion &amp; mapping → 5-DoF viewpoint sampling with an object-centric VLM session → merged with geometric frontiers in a global TSP planner → aim-aligned posture execution." style="max-width:100%;border-radius:6px;"><figcaption style="color:#666;font-size:.9em;margin-top:.4rem;">System overview: fusion &amp; mapping → 5-DoF viewpoint sampling with an object-centric VLM session → merged with geometric frontiers in a global TSP planner → aim-aligned posture execution.</figcaption></figure>
 
 <figure style="margin:1rem 0;"><img src="/assets/img/pose/gain-score.jpg" alt="(a) Candidate viewpoints around a mapped object, colored by visibility score; (b) a tilted posture (−30° pitch, −20° roll) sees ~5× more unobserved object voxels than the flat one." style="max-width:100%;border-radius:6px;"><figcaption style="color:#666;font-size:.9em;margin-top:.4rem;">(a) Candidate viewpoints around a mapped object, colored by visibility score; (b) a tilted posture (−30° pitch, −20° roll) sees ~5× more unobserved object voxels than the flat one.</figcaption></figure>
