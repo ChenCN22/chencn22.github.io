@@ -12,6 +12,8 @@ Hardware-side counterpart of my [semantic exploration work](/research/semantic-e
 give a real Boston Dynamics Spot dense, semantically-colored 3D perception by fusing an
 Ouster LiDAR with an Insta360 X4 panoramic camera.
 
+
+<figure style="margin:1rem 0;"><img src="/assets/img/pose/panorama.jpg" alt="Insta360 panoramic frame from the Spot deployment, with the semantic targets detected; the same frame colors the LiDAR cloud in real time." style="max-width:100%;border-radius:6px;"><figcaption style="color:#666;font-size:.9em;margin-top:.4rem;">Insta360 panoramic frame from the Spot deployment, with the semantic targets detected; the same frame colors the LiDAR cloud in real time.</figcaption></figure>
 ## Highlights
 
 - Real-time projection pipeline registering full-rate LiDAR sweeps into the panoramic

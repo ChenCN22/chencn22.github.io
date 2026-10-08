@@ -28,6 +28,8 @@ LiDAR–camera fusion · VLM-in-the-loop inspection · embodied intelligence
 
 ## Current Research
 
+<img src="/assets/img/pose/posture.jpg" alt="Spot pitching its body −30° to inspect the top of a band saw" style="max-width:420px;width:100%;border-radius:6px;float:right;margin:0 0 .8rem 1.2rem;">
+
 - [**5-DoF Semantic Exploration with VLM-Guided Active Inspection**](/research/semantic-exploration) —
   a Spot robot explores an unknown industrial scene, maps the machines it recognizes, and
   tilts its body (pitch and roll on top of planar motion — 5-DoF viewpoints chosen by
@@ -36,9 +38,15 @@ LiDAR–camera fusion · VLM-in-the-loop inspection · embodied intelligence
   time** than the planar baseline in simulation; demonstrated on a real Spot in a machine shop.
   *Co-first author · [arXiv:2609.19460](https://arxiv.org/abs/2609.19460) · submitted to
   ICRA 2027.* (NVIDIA Isaac Sim, ROS, C++/Python)
+- [**3D Reconstruction of Shoe Interiors for Footwear Fit**](/research/in-shoe-reconstruction) —
+  geometry-only reconstruction of the inside of a shoe (and, more recently, garments) so fit
+  can be assessed for special foot shapes such as diabetic feet; sensing concept, probe and
+  fixture design, and a CAD-ground-truth test plan — target error ≤ 1 mm. (Sep 2026 – present)
 - [**Real-Time LiDAR–Panoramic Camera Semantic Registration**](/research/lidar-camera-registration) —
   fusing Ouster LiDAR with Insta360 panoramic imagery on a real Boston Dynamics Spot:
   10 FPS dense semantically-colored point clouds with <100 ms latency under gait vibration.
+
+<div style="clear:both"></div>
 
 ## Selected Past Projects
 

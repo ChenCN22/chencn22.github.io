@@ -14,6 +14,8 @@ Exploration with Omnidirectional Perception in Confined Unknown Environments,"
 under review.* \*Equal contribution.
 🔗 **Project page (videos & figures):** [shawn207.github.io/projects/pose](https://shawn207.github.io/projects/pose/)
 
+
+<figure style="margin:1rem 0;"><img src="/assets/img/pose/frontpage.jpg" alt="Real-world run in a machine shop: (a) Spot pitched −30° to see the top of a band saw, (b) the same viewpoint in the point cloud, (c) fisheye frame, (d) semantic map with object boxes, viewpoints and path, (e) panorama with the five target machines detected." style="max-width:100%;border-radius:6px;"><figcaption style="color:#666;font-size:.9em;margin-top:.4rem;">Real-world run in a machine shop: (a) Spot pitched −30° to see the top of a band saw, (b) the same viewpoint in the point cloud, (c) fisheye frame, (d) semantic map with object boxes, viewpoints and path, (e) panorama with the five target machines detected.</figcaption></figure>
 ## Video
 
 <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;max-width:100%;margin:0 0 1rem;">
@@ -58,6 +60,12 @@ end-to-end:
 6. The resulting semantic viewpoints are **merged with geometric exploration viewpoints**
    in one global exploration planner.
 
+
+<figure style="margin:1rem 0;"><img src="/assets/img/pose/methodology.jpg" alt="System overview: fusion &amp; mapping → 5-DoF viewpoint sampling with an object-centric VLM session → merged with geometric frontiers in a global TSP planner → aim-aligned posture execution." style="max-width:100%;border-radius:6px;"><figcaption style="color:#666;font-size:.9em;margin-top:.4rem;">System overview: fusion &amp; mapping → 5-DoF viewpoint sampling with an object-centric VLM session → merged with geometric frontiers in a global TSP planner → aim-aligned posture execution.</figcaption></figure>
+
+<figure style="margin:1rem 0;"><img src="/assets/img/pose/gain-score.jpg" alt="(a) Candidate viewpoints around a mapped object, colored by visibility score; (b) a tilted posture (−30° pitch, −20° roll) sees ~5× more unobserved object voxels than the flat one." style="max-width:100%;border-radius:6px;"><figcaption style="color:#666;font-size:.9em;margin-top:.4rem;">(a) Candidate viewpoints around a mapped object, colored by visibility score; (b) a tilted posture (−30° pitch, −20° roll) sees ~5× more unobserved object voxels than the flat one.</figcaption></figure>
+
+<figure style="margin:1rem 0;"><img src="/assets/img/pose/session.png" alt="What the VLM sees when pruning viewpoints: a BEV map crop with numbered candidates, the re-projected RGB view with mapped voxels tinted green, and a compact structured prompt." style="max-width:760px;border-radius:6px;"><figcaption style="color:#666;font-size:.9em;margin-top:.4rem;">What the VLM sees when pruning viewpoints: a BEV map crop with numbered candidates, the re-projected RGB view with mapped voxels tinted green, and a compact structured prompt.</figcaption></figure>
 The VLM's reasoning is overlaid on the queried frame and streamed to rviz, which makes its
 decisions auditable in real time.
 
@@ -72,11 +80,15 @@ other exploration baselines:
 - **53–73% fewer postures** than competing 5-DoF methods;
 - the **highest mean object-coverage AUC** among the evaluated baselines.
 
+
+<figure style="margin:1rem 0;"><img src="/assets/img/pose/sim-env.jpg" alt="Trajectories of the four planners in the three Isaac Sim scenes (stars = tilted inspection postures, squares = target objects). POSE inspects every object with far fewer postures." style="max-width:100%;border-radius:6px;"><figcaption style="color:#666;font-size:.9em;margin-top:.4rem;">Trajectories of the four planners in the three Isaac Sim scenes (stars = tilted inspection postures, squares = target objects). POSE inspects every object with far fewer postures.</figcaption></figure>
 **Real world (qualitative demonstration)** — the full system ran on a Boston Dynamics Spot
 with the omnidirectional camera–LiDAR suite in a university machine shop, detecting and
 reconstructing five target machines. The sensor side of that deployment is on the
 [LiDAR–camera registration](/research/lidar-camera-registration) page.
 
+
+<figure style="margin:1rem 0;"><img src="/assets/img/pose/panorama.jpg" alt="Panoramic frame from the real run with the five semantic targets detected: two turret mills, a lathe, and two band saws." style="max-width:100%;border-radius:6px;"><figcaption style="color:#666;font-size:.9em;margin-top:.4rem;">Panoramic frame from the real run with the five semantic targets detected: two turret mills, a lathe, and two band saws.</figcaption></figure>
 ## Engineering notes I'm proud of
 
 - The VLM bridge is a standalone ROS node speaking plain `PoseStamped`/`Vector3Stamped`
