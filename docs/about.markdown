@@ -4,8 +4,6 @@ title: About
 permalink: /about/
 ---
 
-<img src="/assets/img/avatar.jpg" alt="Shiyu Chen" style="width:150px;height:150px;border-radius:50%;object-fit:cover;float:right;margin:0 0 1rem 1.5rem;border:4px solid #fff;box-shadow:0 4px 18px rgba(0,0,0,.12)">
-
 I'm **Shiyu Chen (陈时宇)** — Kris. M.S. (Research) in Mechanical Engineering at
 **Carnegie Mellon University**, 2025 – 2027, advised by Prof. Kenji Shimada at CERLAB.
 
@@ -15,10 +13,13 @@ I studied mechanical engineering at the **University of Cincinnati** and **Chong
 University** (Robotics minor) and spent a year and a half deploying computer-vision
 models to edge devices at **CISDI**.
 
-**Elsewhere:** [CV](/assets/ChenShiyuCV.pdf) · [GitHub](https://github.com/ChenCN22) ·
-[arXiv](https://arxiv.org/abs/2609.19460) · shiyuche at andrew dot cmu dot edu
+<div style="margin:1.2rem 0">
+  <div class="photo"><img src="/assets/img/avatar.jpg" alt="Shiyu Chen" style="width:240px"><small>University of Cincinnati</small></div>
+  <div class="photo"><img src="/assets/img/quebec.jpg" alt="Shiyu Chen in Québec, fall 2024" style="width:240px"><small>Québec, fall 2024</small></div>
+</div>
 
-<div style="clear:both"></div>
+**Elsewhere:** [CV](/assets/ChenShiyuCV.pdf) · [GitHub](https://github.com/ChenCN22) ·
+[arXiv](https://arxiv.org/abs/2609.19460) · [shiyuche@andrew.cmu.edu](mailto:shiyuche@andrew.cmu.edu)
 
 ### This site
 
