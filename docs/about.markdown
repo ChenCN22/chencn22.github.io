@@ -19,7 +19,7 @@ models to edge devices at **CISDI**.
 </div>
 
 **Elsewhere:** [CV](/assets/ChenShiyuCV.pdf) · [GitHub](https://github.com/ChenCN22) ·
-[arXiv](https://arxiv.org/abs/2609.19460) · [shiyuche@andrew.cmu.edu](mailto:shiyuche@andrew.cmu.edu)
+[arXiv](https://arxiv.org/abs/2609.19460) · shiyuche at andrew dot cmu dot edu
 
 ### This site
 

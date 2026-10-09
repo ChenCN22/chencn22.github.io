@@ -8,7 +8,7 @@ permalink: /
   <div class="pic"><img src="/assets/img/avatar.jpg" alt="Shiyu Chen"><small>University of Cincinnati</small></div>
   <div class="txt">
     <h1>Shiyu (Kris) Chen</h1>
-    <div class="sub">M.S. (Research), Mechanical Engineering · Carnegie Mellon University · <a href="mailto:shiyuche@andrew.cmu.edu">shiyuche@andrew.cmu.edu</a></div>
+    <div class="sub">M.S. (Research), Mechanical Engineering · Carnegie Mellon University · shiyuche at andrew dot cmu dot edu</div>
     <p>I work on autonomy for legged robots at <a href="https://cerlab11.andrew.cmu.edu/">CERLAB</a> with <a href="https://www.meche.engineering.cmu.edu/directory/bios/shimada-kenji.html">Prof. Kenji Shimada</a>: robots that explore an unknown industrial space, understand what is in it, and decide where and how to look.</p>
     <div class="btns">
       <a class="btn" href="/assets/ChenShiyuCV.pdf">CV</a>

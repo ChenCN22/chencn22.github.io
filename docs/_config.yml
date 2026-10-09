@@ -19,12 +19,12 @@
 # in the templates via {{ site.myvariable }}.
 
 title: Shiyu Chen
-email: shiyuche@andrew.cmu.edu
+# email hidden from footer (crawler); shown obfuscated on pages
 description: >-
   Shiyu (Kris) Chen — robotics M.S. researcher at CMU CERLAB: legged-robot autonomy, active perception, LiDAR–camera fusion.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://chencn22.github.io" # the base hostname & protocol for your site, e.g. http://example.com
-twitter_username: KrisChen7
+# twitter_username: KrisChen7   # hidden for now
 github_username:  ChenCN22
 
 collections:
