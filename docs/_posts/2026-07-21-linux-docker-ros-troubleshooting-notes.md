@@ -12,6 +12,12 @@ date: 2026-07-21
 
 **`apt update` 报错写不了 /tmp 或缓存** —— 十有八九是 `/` 分区满了，而且常见元凶是 Docker。`df -h` 确认，`docker system df` 看占用，`docker system prune -a` 清理（注意会删掉未被容器引用的镜像）。
 
+**磁盘满了先找大文件** —— 当前目录下按大小列出前 10 个（`-x` 不跨文件系统，不会把挂载盘算进来）：
+
+```bash
+du -axh ./ | sort -rh | head -n 10
+```
+
 **图形界面出问题** —— 先 `nvidia-smi` 确认显卡还在，再 `sudo systemctl restart gdm`。
 
 **强杀卡死的 GUI 窗口** —— 终端敲 `xkill`，鼠标变成 X 后点谁杀谁。对卡死的 RViz / Gazebo / SSH 转发窗口特别好用。
