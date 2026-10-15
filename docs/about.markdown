@@ -18,7 +18,7 @@ models to edge devices at **CISDI**.
   <div class="photo"><img src="/assets/img/quebec.jpg" alt="Shiyu Chen in Québec, fall 2024" style="width:240px"><small>Québec, fall 2024</small></div>
 </div>
 
-**Elsewhere:** [CV](/assets/ChenShiyuCV.pdf) · [GitHub](https://github.com/ChenCN22) ·
+**Elsewhere:** [CV](/assets/ChenShiyuCV.pdf) · [GitHub](https://github.com/ChenCN22) (current lab code stays private until the papers are out) ·
 [arXiv](https://arxiv.org/abs/2609.19460) · shiyuche at andrew dot cmu dot edu
 
 ### This site
