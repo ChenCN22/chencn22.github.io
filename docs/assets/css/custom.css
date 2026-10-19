@@ -37,3 +37,5 @@ a{color:var(--acc)}a:hover{color:#064e52;text-decoration:underline}
 .posts-mini{list-style:none;padding:0}.posts-mini li{padding:.2rem 0}.posts-mini span{color:var(--mute);font-size:.85em}
 .photo{display:inline-block;text-align:center;margin:0 1rem 1rem 0}.photo img{border-radius:10px;display:block}.photo small{color:var(--mute);font-size:.8rem}
 @media(max-width:640px){.hero{flex-direction:column;text-align:center}.card{grid-template-columns:1fr}.card .b{padding:.85rem 1rem}}
+
+.card.nomedia{display:block}.card.nomedia .b{padding:.85rem 1rem}

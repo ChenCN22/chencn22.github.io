@@ -27,6 +27,11 @@ url: "https://chencn22.github.io" # the base hostname & protocol for your site, 
 # twitter_username: KrisChen7   # hidden for now
 github_username:  ChenCN22
 
+header_pages:
+  - about.markdown
+  - projects.md
+  - posts.md
+
 collections:
   projects:
     output: true

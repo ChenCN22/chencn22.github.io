@@ -46,12 +46,12 @@ permalink: /
 </div>
 
 <div class="card">
-  <div class="media"><img src="/assets/img/shoe/concept-thumb.jpg" alt="Probe inside a shoe cavity — concept"></div>
+  <div class="media"><img src="/assets/img/lidar-odom/thumb.jpg" alt="Constrained LiDAR odometry trajectory on the AutoMine route"></div>
   <div class="b">
-    <div class="tag">3D sensing · ongoing</div>
-    <h3><a href="/research/in-shoe-reconstruction">3D Reconstruction of Shoe Interiors for Footwear Fit</a></h3>
-    <p>Measuring the inside of a closed shoe to assess fit for special foot shapes; probe, fixture and ground-truth test plan — target error ≤ 1 mm.</p>
-    <div class="links"><a href="/research/in-shoe-reconstruction">page</a></div>
+    <div class="tag">Optimization · course project</div>
+    <h3><a href="/research/lidar-odometry">Robust LiDAR Odometry with Vehicle-Kinematic Inequality Constraints</a></h3>
+    <p>Bicycle-model bounds on the ICP pose increment, solved as active-set QPs: drift down from 1.7 % to 1.4 % on a 6.3 km mine route and 1.9 % to 1.4 % on 19 km of HeLiPR.</p>
+    <div class="links"><a href="/research/lidar-odometry">page</a></div>
   </div>
 </div>
 
@@ -60,10 +60,11 @@ permalink: /
 <ul class="tl">
   <li><span class="when">2026 · 09</span><span class="what">Paper on pose-aware legged-robot semantic exploration on <a href="https://arxiv.org/abs/2609.19460">arXiv</a> (co-first author), submitted to ICRA 2027 — and the full system demonstrated on a real Spot.</span></li>
   <li><span class="when">2026 · 09 →</span><span class="what">Research assistant, 3D reconstruction of shoe interiors <small>— CERLAB, Prof. Shimada</small></span></li>
+  <li><span class="when">2025 · 09 – 12</span><span class="what">Course project, LiDAR odometry with vehicle-kinematic inequality constraints <small>— CMU 24-785 Engineering Optimization</small></span></li>
   <li><span class="when">2025 · 08 →</span><span class="what">M.S. (Research), Mechanical Engineering, Carnegie Mellon University <small>— CERLAB, Prof. Kenji Shimada</small></span></li>
   <li><span class="when">2024 · 09 – 2025 · 05</span><span class="what">Undergraduate researcher, cable-driven soft robotic arm for minimally invasive surgery <small>— Univ. of Cincinnati, Prof. Janet Dong → ASME J. Medical Diagnostics 2026</small></span></li>
-  <li><span class="when">2022 · 05 – 2023 · 12</span><span class="what">Computer-vision R&amp;D assistant, CISDI <small>— detection models deployed to NVIDIA edge devices for industrial inspection; co-inventor on 4 granted patents</small></span></li>
-  <li><span class="when">2022</span><span class="what">Research assistant, deep-learning defect detection <small>— Chongqing University, Prof. Bo Yang → ICICML 2023</small></span></li>
+  <li><span class="when">2022 · 05 – 2023 · 12</span><span class="what">Computer vision engineer (intern), CISDI <small>— segmentation-based belt-conveyor inspection for steel plants, edge deployment on Jetson / Ascend; co-inventor on 4 granted patents</small></span></li>
+  <li><span class="when">2022</span><span class="what">Undergraduate researcher, deep-learning surface-defect segmentation <small>— Chongqing University, Prof. Bo Yang → ICICML 2023</small></span></li>
   <li><span class="when">2020 – 2025</span><span class="what">B.S. / B.Eng. Mechanical Engineering, joint program <small>— University of Cincinnati &amp; Chongqing University, Robotics minor</small></span></li>
 </ul>
 
