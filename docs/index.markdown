@@ -12,6 +12,7 @@ permalink: /
     <p>I work on autonomy for legged robots at <a href="https://cerlab11.andrew.cmu.edu/">CERLAB</a> with <a href="https://www.meche.engineering.cmu.edu/directory/bios/shimada-kenji.html">Prof. Kenji Shimada</a>: robots that explore an unknown industrial space, understand what is in it, and decide where and how to look.</p>
     <div class="btns">
       <a class="btn" href="/assets/ChenShiyuCV.pdf">CV</a>
+      <a class="btn alt" href="/assets/ChenShiyuCV_CN.pdf">中文简历</a>
       <a class="btn alt" href="https://arxiv.org/abs/2609.19460">arXiv</a>
       <a class="btn alt" href="https://github.com/ChenCN22">GitHub</a>
       <a class="btn alt" href="/about/">About</a>
