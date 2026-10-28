@@ -1,12 +1,12 @@
 ---
-title: "Linux / Docker / ROS 日常踩坑速查合集"
+title: "Linux / Docker / Git 日常踩坑速查"
 layout: post
-description: "从语音笔记收件箱里整理出来的一批零散但高频的踩坑记录：磁盘占满、X11、Docker 清理、RViz goal topic、鱼眼标定、ROS2 QoS 丢包、Isaac Sim GUI 黑屏、git 免密、ffmpeg 抽帧、术语速记等。"
-categories: [Linux, ROS, IsaacSim]
+description: "磁盘占满、X11、xkill、pkill、Fcitx5、tar、Docker 清理与 GUI、git 免密与改 author、ffmpeg 抽帧、手写 SVG。"
+categories: [Linux]
 date: 2026-07-21
 ---
 
-日常干活攒下的一批碎片笔记，单独成文都太短，合并归档在这里备查。
+日常干活攒下的碎片笔记，单独成文都太短，按主题合并备查。这一篇是系统、Docker 和 Git / 媒体工具；ROS 和 Isaac Sim 的另开两篇。
 
 ## Linux / 系统
 
@@ -62,32 +62,6 @@ docker build --no-cache -t name:tag .   # 跳过缓存
 
 **容器里跑 GUI** —— 起容器前先在宿主机执行 `xhost +local:root`，否则容器内的 GUI 程序连不上 X server。
 
-## ROS / 感知
-
-**RViz 发了 2D Goal 机器人没反应** —— RViz 默认发 `/goal_pose`（或 `/move_base_simple/goal`，看版本），和导航栈监听的 topic 对不上。在 `Panels → Tool Properties` 里改成实际的 topic。
-
-**ROS2 编译缺 CMake module** —— 按顺序：
-
-```bash
-source /opt/ros/<distro>/setup.bash
-sudo apt update && rosdep update
-rosdep install --from-paths src --ignore-src -r -y
-```
-
-**OpenCV 鱼眼标定 (`cv2.fisheye.calibrate`)** —— 不要用带二维码的标定板，QR 图案会干扰角点识别，标定要么失败要么精度很差。用干净的纯棋盘格。
-
-**ROS2 大数据 topic 别用 `best_effort`，改 `reliable`** —— DDS 底层把大消息按 UDP 分块发；`best_effort` 下**丢任意一块，整条消息就作废**（收端拼不出来直接丢弃），高清视频、大点云这种一帧几 MB 的 topic 尤其明显。改成 `reliable` 后丢块会自动重传。数据量再大，可能还得把 DDS 的**共享内存（shared memory）**调大。调 Insta360 X4 driver 时踩的坑。
-
-## Isaac Sim
-
-**GUI 起不来 / 黑屏，按这三步排查**（在 Docker 里跑 Isaac 的常见故障，按顺序试）：
-
-1. **GPU 掉了？** `docker exec <isaac-gui-container> nvidia-smi` —— 报 NVML 错误就是容器把 GPU 丢了，`docker restart <isaac-gui-container>` 一般能救回来。
-2. **X 授权掉了？** 宿主机 `xhost` 里没有 `LOCAL:`（注销 / 重启后会被重置），重跑 `xhost +local:`。
-3. **前两步都正常** —— 直接看容器内日志：`docker exec <isaac-gui-container> tail -30 /tmp/gui.log`。
-
-**把 UE5 场景搬进 Omniverse / Isaac** —— 从 UE5 导出后，用 **USD Composer + Scene Optimizer** 处理成可用的 USD；具体流程参考 AirLab 的相关 post，别自己硬啃。
-
 ## Git & 媒体工具
 
 **git 免密 clone（配 SSH key）** —— 不想每次输账号密码，配一把 key：
@@ -100,6 +74,19 @@ ssh -T git@github.com              # 测试连通
 ```
 
 之后用 `git@github.com:user/repo.git` 形式 clone 就不再要密码。
+
+**改 author 重新提交，并推到新的 remote / 分支** —— 换机器或换账号后提交人信息不对时：
+
+```bash
+git config user.name  <name>
+git config user.email <email>
+git commit --amend --reset-author --no-edit   # 用新身份重写最后一次提交
+
+git remote -v                                 # 如果需要换源
+git remote set-url origin <link-to-.git>
+
+git push -u origin <branch-name>
+```
 
 **ffmpeg 抽帧（比 OpenCV 快）** —— 降帧率 + 导出 JPG 序列，处理视频数据集常用：
 
@@ -125,14 +112,3 @@ ffmpeg -i "$reduced_video" -q:v 2 -start_number 0 "${output_dir}/%05d.jpg"
   <rect x="10" y="10" width="180" height="180" fill="none" stroke="red" stroke-width="16"/>
 </svg>
 ```
-
-## 概念速记
-
-- **Pixel vs Voxel**：2D 图像最小单元 vs 3D 空间最小单元（点云体素化的基本单位）。
-- **Wall time vs CPU time**：真实流逝时间 vs CPU 实际计算时间（不含 IO 等待/阻塞）。
-- **Oracle**：理想化的黑盒，能直接给出正确答案、通常不可实现——常拿来当性能上界 / baseline。
-- **Dwell**：停留（在某个视点 / 状态停留的时长）。
-- **Race condition（竞态）**：并发下多个操作先后顺序不确定，结果时对时错、不可复现；同样代码同样场景，绝大多数时候正常、偶尔失败。
-- **Stub（桩）**：接口签名正确、内部是假的 / 极简替代实现，真实组件缺位时先把流程跑通。
-- **Churn**：状态 / 输出在几个值之间来回横跳，每次跳动都触发下游代价、净收益却为零。软件里的 **code churn** 指刚写的代码（常在两三周内）被重写 / 删除 / 替换的比率；另有 backlog / customer / team churn。
-- **Stale（过期）**：数据还在，但已经不反映当前真实状态。

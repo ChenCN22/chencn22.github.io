@@ -8,7 +8,7 @@ Working notes — ROS, Linux, Docker, course notes, debugging stories. Mostly in
 
 {% for cat in site.categories %}
   {% assign key = cat[0] %}
-  {% assign display = site.category_display_names[key] | default: key | capitalize %}
+  {% assign display = site.category_display_names[key] | default: key %}
 
 ## {{ display }}
 

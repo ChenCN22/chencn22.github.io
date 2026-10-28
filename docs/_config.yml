@@ -65,6 +65,10 @@ plugins:
 
 
 category_display_names:
+  Linux: "Linux & Docker"
+  IsaacSim: "Isaac Sim"
+  Misc: "Misc"
+  ROS: "ROS"
   ros: "ROS"
   cv: "Computer Vision"
   sde: "Java & SDE"
