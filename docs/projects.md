@@ -17,6 +17,16 @@ All research and course projects, newest first. The front page shows the three I
 </div>
 
 <div class="card">
+  <div class="media"><video autoplay muted loop playsinline poster="/assets/img/llm-manipulator/thumb.jpg"><source src="/assets/img/llm-manipulator/agent-episode.mp4" type="video/mp4"></video></div>
+  <div class="b">
+    <div class="tag">Robot learning · LLM agents · course project · Fall 2026</div>
+    <h3><a href="/research/llm-manipulator">LLM-Guided RL Manipulator with an Imperfect Pick-and-Place Skill</a></h3>
+    <p>LLM agents on top of a frozen RL skill and cameras that can be wrong: keeping evidence in program memory finished 79–85 % of tasks with a faulty camera on 6 of 7 language models.</p>
+    <div class="links"><a href="/research/llm-manipulator">page</a></div>
+  </div>
+</div>
+
+<div class="card">
   <div class="media"><video autoplay muted loop playsinline poster="/assets/img/clips/pose-15s-poster.jpg"><source src="/assets/img/clips/pose-15s.mp4" type="video/mp4"></video></div>
   <div class="b">
     <div class="tag">Active perception · ICRA 2027 submission · 2025 – 2026</div>
