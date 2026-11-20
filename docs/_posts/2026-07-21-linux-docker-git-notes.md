@@ -1,7 +1,7 @@
 ---
 title: "Linux / Docker / Git 日常踩坑速查"
 layout: post
-description: "磁盘占满、X11、xkill、pkill、Fcitx5、tar、Docker 清理与 GUI、git 免密与改 author、ffmpeg 抽帧、手写 SVG。"
+description: "磁盘占满、X11、xkill、pkill、终端鼠标乱码、Fcitx5、tar、Docker 清理与 GUI、git 免密与改 author、ffmpeg 抽帧、手写 SVG。"
 categories: [Linux]
 date: 2026-07-21
 ---
@@ -23,6 +23,12 @@ du -axh ./ | sort -rh | head -n 10
 **强杀卡死的 GUI 窗口** —— 终端敲 `xkill`，鼠标变成 X 后点谁杀谁。对卡死的 RViz / Gazebo / SSH 转发窗口特别好用。
 
 **按命令行匹配杀进程** —— `pkill -f "match string"` 按**完整命令行**匹配（不像默认只匹配进程名），杀带一长串参数的进程 / 脚本时好用。坑：匹配串会把 `pkill`/`grep` 命令自己也匹配进去，用方括号避开（如 `patter[n]`）。
+
+**动鼠标 / 触控板时终端冒出 `35;91m` 这类乱码** —— 某个开了鼠标跟踪的程序（tmux、vim、htop 等全屏终端程序）没正常退出，没把终端模式关掉，终端还在把鼠标移动当成按键序列打出来。敲 `reset` 回车即可（乱码里照样能打），它会清屏并恢复终端设置。macOS 的 Terminal / iTerm2 里也有 `reset`，用法一样。不想清屏的话，只关鼠标跟踪：
+
+```bash
+printf '\e[?1000l\e[?1002l\e[?1003l\e[?1006l'
+```
 
 **SSH 远程打开浏览器** —— `ssh -X user@host xdg-open https://example.com`。
 
